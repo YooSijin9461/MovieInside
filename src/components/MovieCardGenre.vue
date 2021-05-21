@@ -1,6 +1,8 @@
 <template>
   <div id="moviecardgenre">
-    <b-button class="btn-primary" @click="getGenreMovie" :genreId="moviegenre.id">{{ moviegenre.name }}</b-button>
+    <div id="genreid">
+      <b-button class="btn-primary" @click="getGenreMovie">{{ moviegenre.name }}</b-button>
+    </div>
   </div>
 </template>
 
@@ -23,26 +25,20 @@ export default {
     return config
   },
   getGenreMovie: function () {
+    const genreId = this.moviegenre.id
     axios({
       method: 'get',
       url: `${MOVIE_URL}/movies/${genreId}/1`,
       headers: this.getToken()
     })
       .then((res) => {
-        if (this.$store.state.genremovies.length === 0) {
-          this.$store.state.genremovies = res.data
-        }
+        this.$store.state.genremovies = res.data
       })
       .catch((err) => {
         console.log(err)
       })
     }
   },
-  computed: {
-    genremovies: function () {
-      return this.$store.state.genremovies
-    }
-  }
 }
 </script>
 

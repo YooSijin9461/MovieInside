@@ -32,7 +32,7 @@ export default {
   getMovieDatas: function () {
     axios({
       method: 'get',
-      url: `${MOVIE_URL}/movies/main/1`,
+      url: `${MOVIE_URL}/movies/all/1`,
       headers: this.getToken()
     })
       .then((res) => {
