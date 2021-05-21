@@ -22,30 +22,23 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "Login",
-  data: function () {
-    return {
-      loginStatus: false,
-      credentials: {
-        username: '',
-        password: '',
-      },
-    }
-  },
   methods: {
     login: function () {
-      axios.post(`${SERVER_URL}/accounts/login/`, this.credentials)
+      const data = {
+        username: this.username,
+        password: this.password,
+      }
+      axios.post(`${SERVER_URL}/accounts/login/`, data)
         .then((res) => {
           console.log(res)
           localStorage.setItem('jwt', res.data.token)
-          location.reload()
+          this.$emit('login')
+          this.$router.push({name: 'Home'})
         })
         .catch((err) => {
           console.log(err)
         })
     },
-    moveToSignUp: function () {
-      this.$router.push({ name:'SignUp' })
-    }
   },
 }
 </script>

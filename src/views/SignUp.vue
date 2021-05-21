@@ -2,35 +2,35 @@
   <div id="signup">
     <form class="row g-3">
   <div class="col-md-4">
-    <label for="validationUsername" class="form-label">Username</label>
-    <input type="text" class="form-control" id="validationUsername" value="name" required>
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" value="name" required>
   </div>
-  <div class="col-md-4">
+  <!-- <div class="col-md-4">
     <label for="validationBirth" class="form-label">Birth</label>
     <input type="text" class="form-control" id="validationBirth" value="YYYYMMDD" required>
   </div>
   <div class="col-md-2">
-    <label for="validationSex" class="form-label">Sex</label>
+    <label for="sex" class="form-label">Sex</label>
     <select class="form-select" id="validationSex" required>
       <option>Man</option>
       <option>Woman</option>
     </select>
-  </div>
+  </div> -->
   <div class="col-md-10">
-    <label for="validationEmail" class="form-label">Email</label>
+    <label for="email" class="form-label">Email</label>
     <div class="input-group">
-      <input type="text" class="form-control" id="validationEmail"  aria-describedby="inputGroupPrepend2" required>
+      <input type="text" class="form-control" id="email"  aria-describedby="inputGroupPrepend2" required>
       <span class="input-group-text" id="inputGroupPrepend2">@</span>
-      <input type="text" class="form-control" id="validationEmail"  aria-describedby="inputGroupPrepend2" required>
+      <!-- <input type="text" class="form-control" id="email"  aria-describedby="inputGroupPrepend2" required> -->
     </div>
   </div>
   <div class="col-md-5">
-    <label for="validationPassword" class="form-label">Password</label>
-    <input type="text" class="form-control" id="validationPassword" required>
+    <label for="password" class="form-label">Password</label>
+    <input type="text" class="form-control" id="password" required>
   </div>
   <div class="col-md-5">
-    <label for="validationPasswordConfirm" class="form-label">PasswordConfirm</label>
-    <input type="text" class="form-control" id="validationPasswordConfirm" required>
+    <label for="passwordConfirm" class="form-label">PasswordConfirm</label>
+    <input type="text" class="form-control" id="passwordConfirm" required>
   </div>
   <div class="col-10">
     <div class="form-check">
@@ -56,22 +56,36 @@ export default {
   name: "SignUp",
   data: function () {
     return {
-      credentials: {
-        username: '',
-        age: '',
-        sex: '',
-        email: '',
-        password: '',
-        passwordConfirm: '',
-      },
+      username: '',
+      // age: '',
+      // sex: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
     }
   },
   methods: {
     SignUp: function () {
-      axios.post(`${SERVER_URL}/accounts`, this.credentials)
+      const userdata = {
+        username: this.username,
+        // age: this.age,
+        // sex: this.sex,
+        email: this.email,
+        password: this.password,
+        passwordConfirm: this.passwordConfirm
+      }
+      console.log(this.username)
+      axios({
+        method: 'post',
+        url: `${SERVER_URL}/accounts/`,
+        data: userdata
+      })
         .then(res => {
           console.log(res)
-          this.$router.push({ name: "Login" })
+          this.$router.push('Login')
+        })
+        .catch(err => {
+          console.log(err.response)
         })
     }
   }
