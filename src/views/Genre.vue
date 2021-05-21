@@ -1,6 +1,6 @@
 <template>
   <div id="Genre">
-    <h2>장르별 영화 추천</h2>
+    <h2>장르별 영화 목록</h2>
     
     <span v-if="moviesgenre.length===0">
       <button @click="getMovieGenre">보기</button>
@@ -33,7 +33,6 @@ export default {
     }
     return config
   },
-
   getMovieGenre: function () {
     axios({
       method: 'get',

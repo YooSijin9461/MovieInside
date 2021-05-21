@@ -1,5 +1,5 @@
 <template>
-  <div id="moviecard">
+  <div id="moviecard" @click="watchDetail">
     <div class="col">
       <div class="card">
         <img :src="movieUrl" class="card-img-top" alt="..." height="300px">
@@ -13,10 +13,21 @@
 </template>
 
 <script>
+
 export default {
   name: 'MovieCard',
+  data: function () {
+    return {
+      movieId: '',
+    }
+  },
   props: {
     movie: Object,
+  },
+  methods: {
+    watchDetail: function () {
+      this.$store.dispatch('watchDetail', this.movie)
+    },
   },
   computed: {
     movieUrl: function () {

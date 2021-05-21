@@ -1,7 +1,6 @@
 <template>
   <div id="All">
     <h2>전체 영화 페이지</h2>
-    {{ movies }}
     <div id="cards" class="row row-cols-3 row-cols-md-6">
       <MovieCard v-for="(movie, idx) in movies" :key="idx" :movie="movie"/>
     </div>

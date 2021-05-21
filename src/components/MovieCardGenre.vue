@@ -1,7 +1,7 @@
 <template>
   <div id="moviecardgenre">
     <div id="genreid">
-      <b-button class="btn-primary" @click="getGenreMovie">{{ moviegenre.name }}</b-button>
+      <b-button class="btn-primary" @click="[getGenreMovie(), watchCard()]">{{ moviegenre.name }}</b-button>
     </div>
   </div>
 </template>
@@ -17,6 +17,9 @@ export default {
     moviegenre: Object,
   },
   methods: {
+  watchCard: function () {
+    this.$store.dispatch('watchCard')
+  },
   getToken: function () {
     const token = localStorage.getItem('jwt')
     const config = {

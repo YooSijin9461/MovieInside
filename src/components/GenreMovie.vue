@@ -1,6 +1,7 @@
 <template>
   <div id="genremovie">
-    <div id="cards" class="row row-cols-3 row-cols-md-6">
+    <MovieDetail v-if="watchdetail"/>
+    <div id="cards" class="row row-cols-3 row-cols-md-6" v-else>
       <MovieCard v-for="(movie, idx) in genremovies" :key="idx" :movie="movie"/>
     </div>
   </div>
@@ -8,15 +9,27 @@
 
 <script>
 import MovieCard from '@/components/MovieCard.vue'
+import MovieDetail from '@/components/MovieDetail.vue'
 
 export default {
   name: 'GenreMovie',
+  data: function () {
+    return {
+      movieId: '',
+    }
+  },
   components: {
     MovieCard,
+    MovieDetail,
+  },
+  methods: {
   },
   computed: {
     genremovies: function () {
       return this.$store.state.genremovies
+    },
+    watchdetail: function () {
+      return this.$store.state.watchdetail
     }
   }
 }
