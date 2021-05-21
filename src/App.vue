@@ -23,6 +23,12 @@
             <li class="nav-item">
               <a class="nav-link" href="#"><router-link to="/about">My Page</router-link></a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><router-link to="/signup">Sign up</router-link></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><router-link to="/login">Login</router-link></a>
+            </li>
           </ul>
         </div>
       </div>
