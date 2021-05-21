@@ -21,13 +21,20 @@ import axios from 'axios'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: "Login",
+  name: 'Login',
+  data: function () {
+    return {
+      username: '',
+      password: '',
+    }
+  },
   methods: {
     login: function () {
       const data = {
         username: this.username,
         password: this.password,
       }
+      console.log(`${SERVER_URL}/accounts/login/`)
       axios.post(`${SERVER_URL}/accounts/login/`, data)
         .then((res) => {
           console.log(res)
