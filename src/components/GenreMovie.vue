@@ -1,7 +1,7 @@
 <template>
   <div id="genremovie">
     <MovieDetail v-if="watchdetail"/>
-    <div id="cards" class="row row-cols-3 row-cols-md-6" v-else>
+    <div id="cards" class="row row-cols-3 row-cols-md-5" v-else>
       <MovieCard v-for="(movie, idx) in genremovies" :key="idx" :movie="movie"/>
     </div>
   </div>

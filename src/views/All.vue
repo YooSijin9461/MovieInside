@@ -1,53 +1,35 @@
 <template>
   <div id="All">
     <h2>전체 영화 페이지</h2>
-    <div id="cards" class="row row-cols-3 row-cols-md-6">
+    <MovieDetail v-if="watchdetail"/>
+    <div id="cards" class="row row-cols-3 row-cols-md-5">
       <MovieCard v-for="(movie, idx) in movies" :key="idx" :movie="movie"/>
     </div>
-    <button @click="getMovieDatas">xx</button>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import MovieCard from '@/components/MovieCard.vue'
-
-const MOVIE_URL = process.env.VUE_APP_SERVER_URL
+import MovieDetail from '@/components/MovieDetail.vue'
 
 export default {
   name: 'All',
   components: {
     MovieCard,
+    MovieDetail,
   },
   methods: {
-  getToken: function () {
-    const token = localStorage.getItem('jwt')
-    const config = {
-      Authorization: `JWT ${token}`
-    }
-    return config
-  },
-
-  getMovieDatas: function () {
-    axios({
-      method: 'get',
-      url: `${MOVIE_URL}/movies/all/1`,
-      headers: this.getToken()
-    })
-      .then((res) => {
-        if (this.$store.state.movies.length === 0) {
-          this.$store.state.movies = res.data
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
   },
   computed: {
+    allMovieList: function () {
+      return this.$store.dispatch('allMovieList')
+    },
     movies: function () {
       return this.$store.state.movies
-    }
+    },
+    watchdetail: function () {
+      return this.$store.state.watchdetail
+    },
   }
 }
 </script>
