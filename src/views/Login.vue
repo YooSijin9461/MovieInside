@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios'
+import jwt_decode from "jwt-decode"
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -37,9 +38,13 @@ export default {
       console.log(`${SERVER_URL}/accounts/login/`)
       axios.post(`${SERVER_URL}/accounts/login/`, data)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           localStorage.setItem('jwt', res.data.token)
           this.$emit('login')
+          const JWT = localStorage.getItem('jwt')
+          let decoded = jwt_decode(JWT)
+          this.$store.state.username = decoded.username
+          // console.log(decoded.username)
           this.$router.push({name: 'Home'})
         })
         .catch((err) => {

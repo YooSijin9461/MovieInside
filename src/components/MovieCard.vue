@@ -1,5 +1,5 @@
 <template>
-  <div id="moviecard" @click="watchDetail">
+  <div id="moviecard" @click="[watchDetail(), getMovieGenre()]">
     <div class="col">
       <div class="card">
         <img :src="movieUrl" class="card-img-top" alt="..." height="300px">
@@ -27,6 +27,9 @@ export default {
   methods: {
     watchDetail: function () {
       this.$store.dispatch('watchDetail', this.movie)
+    },
+    getMovieGenre: function () {
+      this.$store.dispatch('getMovieGenre', this.movie)
     },
   },
   computed: {
