@@ -15,6 +15,7 @@ export default new Vuex.Store({
     watchdetail: false,
     detailgenre: [],
     comments: [],
+    recomments: [],
   },
   mutations: {
     ALL_MOVIE_LIST: function (state, res) {
@@ -40,9 +41,7 @@ export default new Vuex.Store({
     GET_MOVIE_GENRE: function (state, res) {
       state.detailgenre = res.data
     },
-    GET_COMMENT: function (state, res) {
-      console.log(res)
-      state.comments = res.data
+    GET_COMMENT: function () {
     },
   },
   actions: {
@@ -58,14 +57,14 @@ export default new Vuex.Store({
     },
     getComment: function ({ commit }, moviedetail) {
       const MOVIE_ID = moviedetail.id
-      // const config = this.getToken()
+      const config = this.getToken
       axios({
         method: 'get',
         url: `http://127.0.0.1:8000/comments/${MOVIE_ID}/1/`,
-        headers: this.config
+        headers: config
       })
         .then((res) => {
-          // console.log(res)
+          console.log(res)
           commit('GET_COMMENT', res)
         })
         .catch((err) => {

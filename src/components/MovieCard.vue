@@ -5,7 +5,7 @@
         <img :src="movieUrl" class="card-img-top" alt="..." height="300px">
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
-          <p class="card-text">{{ movie.overview }}</p>
+          <!-- <p class="card-text">{{ movie.overview }}</p> -->
         </div>
       </div>
     </div>
@@ -42,6 +42,6 @@ export default {
 
 <style>
 .card {
-  height: 600px;
+  height: 400px;
 }
 </style>

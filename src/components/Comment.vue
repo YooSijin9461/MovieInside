@@ -1,34 +1,26 @@
 <template>
   <div id="comment">
-    <div v-for="(comment, idx) in comments" :key="idx" :comment="comment">
-      <ul>
-        <li>{{ comment.username }}|{{ comment.contents }}{{comment}}{{idx}}
-          <input v-if="username === comment.username" type="text" @keyup.enter="updateComment(idx)" :value="comment.contents">
-          <button @click="updateComment(idx)">수정하기</button>
-          <button v-if="updatecount>0" @click="watchHistory">수정내역</button>
-          <button @click="deleteComment(idx)">X</button>
-        </li>
-      </ul>
-    </div>
-    댓글 : <input type="text" v-model.trim="contents" @keyup.enter="addComment">
+    <CommentList v-for="(comment, idx) in comments" :key="idx" :comment="comment"/>
+    <input type="text" v-model.trim="contents">
     <button @click="addComment">등록</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import CommentList from '@/components/CommentList.vue'
 
 export default {
   name: 'Comment',
   props: {
     moviedetail: Object,
   },
+  components: {
+    CommentList,
+  },
   data: function () {
     return {
       contents: '',
-      username: '',
-      updatecount: 0,
-      history: [],
     }
   },
   methods: {
@@ -40,63 +32,41 @@ export default {
       return config
     },
     addComment: function () {
-      const review = {
-        username: this.$store.state.username,
+      const MOVIE_ID = this.moviedetail.id
+      const config = this.setToken()
+      const commentItem = {
         contents: this.contents,
       }
-      if (review.contents) {
-        const MOVIE_ID = this.moviedetail.id
-        const config = this.setToken()
+      if (commentItem.contents) {
         axios({
           method: 'post',
           url: `http://127.0.0.1:8000/comments/${MOVIE_ID}/1/`,
-          data: review,
+          data: commentItem,
           headers: config,
         })
-          .then(() => {
-            // console.log(res)
-            this.$store.state.comments.push(review)
-            // this.$store.dispatch('getComment', this.moviedetail)
+          .then((res) => {
+            console.log(res)
+            // console.log(review)
+            this.getComment()
             this.contents = ''
+            this.vote = 0
           })
           .catch((err) => {
             console.log(err)
           })
         }
     },
-
-    updateComment: function (idx) {
-      const review = {
-        username: this.$store.state.username,
-        contents: this.contents,
-      }
+    getComment: function () {
+      const MOVIE_ID = this.moviedetail.id
+      const config = this.setToken()
       axios({
-        method: 'put',
-        url: `http://127.0.0.1:8000/comments/update/${idx}/`,
-        data: review,
-        headers: this.setToken()
+        method: 'get',
+        url: `http://127.0.0.1:8000/comments/${MOVIE_ID}/1/`,
+        headers: config
       })
         .then((res) => {
+          this.$store.state.comments = res.data
           console.log(res)
-          this.data.updatecount += 1
-          
-        })
-    },
-    deleteComment: function (idx) {
-      const review = {
-        username: this.$store.state.username,
-        contents: this.contents,
-      }
-      // console.log(idx)
-      axios({
-        method: 'put',
-        url: `http://127.0.0.1:8000/comments/delete/${idx}/`,
-        data: review,
-        headers: this.setToken()
-      })
-        .then((res) => {
-          console.log(res)
-          this.getComment()
         })
         .catch((err) => {
           console.log(err)
@@ -107,9 +77,9 @@ export default {
     comments: function () {
       return this.$store.state.comments
     },
-    getComment: function () {
-      return this.$store.dispatch('getComment', this.moviedetail)
-    },
+    // getComment: function () {
+    //   return this.$store.dispatch('getComment', this.moviedetail)
+    // },
   },
 }
 </script>
