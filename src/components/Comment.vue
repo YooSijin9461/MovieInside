@@ -1,6 +1,6 @@
 <template>
   <div id="comment">
-    <CommentList v-for="(comment, idx) in comments" :key="idx" :comment="comment"/>
+    <CommentList v-for="(comment, idx) in comments" :key="idx" :comment="comment" :moviedetail="moviedetail"/>
     <input type="text" v-model.trim="contents">
     <button @click="addComment">등록</button>
   </div>
@@ -49,7 +49,6 @@ export default {
             // console.log(review)
             this.getComment()
             this.contents = ''
-            this.vote = 0
           })
           .catch((err) => {
             console.log(err)
@@ -74,12 +73,12 @@ export default {
     },
   },
   computed: {
+    // getComment: function () {
+    //   return this.$store.dispatch('getComment', this.moviedetail, this.config)
+    // },
     comments: function () {
       return this.$store.state.comments
     },
-    // getComment: function () {
-    //   return this.$store.dispatch('getComment', this.moviedetail)
-    // },
   },
 }
 </script>
