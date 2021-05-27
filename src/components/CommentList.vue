@@ -162,6 +162,9 @@ export default {
         })
     },
   },
+  mounted: function () {
+    this.getRecomment()
+  }
 }
 </script>
 

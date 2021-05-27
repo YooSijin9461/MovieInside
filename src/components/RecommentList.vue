@@ -150,6 +150,9 @@ export default {
         })
     },
   },
+  mounted: function () {
+    this.getRecomment()
+  }
 }
 </script>
 
@@ -160,5 +163,6 @@ export default {
 }
 .recommbtn {
   margin-left: auto;
+  color: black;
 }
 </style>

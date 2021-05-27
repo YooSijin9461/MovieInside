@@ -41,7 +41,7 @@ export default {
           headers: config
         })
           .then((res) => {
-            console.log("recommended: ", res)
+            // console.log("recommended: ", res)
             this.$store.state.moviedetail = res.data
           })
           .catch((err) => {

@@ -1,7 +1,7 @@
 <template>
   <div id="comment" class="col-12">
     <CommentList v-for="(comment, idx) in comments" :key="idx" :comment="comment" :moviedetail="moviedetail"/>
-    <form id="votename">
+    <div id="votename">
       <label style="margin-right: 10px;" for="vote">평점:</label>
       <select name="vote" id="vote" v-model="vote">
         <option value=1 selected>1</option>
@@ -17,7 +17,7 @@
       </select>
     <input class="commentform" type="text" v-model.trim="contents">
     <button id="vote" class="inputbtn" @click="[addComment(), getVote()]">등록</button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -104,6 +104,7 @@ export default {
           })
       }
     },
+    
   },
   mounted: function () {
     this.getComment()
