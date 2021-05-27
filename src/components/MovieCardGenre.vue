@@ -1,7 +1,7 @@
 <template>
   <div id="moviecardgenre">
     <div id="genreid">
-      <b-button class="btn-primary" @click="[getGenreMovie(), watchCard()]">{{ moviegenre.name }}</b-button>
+      <b-button class="btn-success" @click="[getGenreMovie(), watchCard()]">{{ moviegenre.name }}</b-button>
     </div>
   </div>
 </template>
@@ -46,7 +46,11 @@ export default {
 </script>
 
 <style>
-.card {
+/* .card {
   height: 600px;
-}
+} */
+
+/* .moviecardgenre {
+  display: flex;
+} */
 </style>

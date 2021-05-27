@@ -1,48 +1,85 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">영화 커뮤니티</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link :to="{ name: 'Home' }">Home</router-link></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link :to="{ name: 'All' }">All</router-link></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link :to="{ name: 'Genre' }">Genre</router-link></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link to="/">Random Choice</router-link></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link to="/about">My Page</router-link></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link to="/signup">Sign up</router-link></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><router-link to="/login">Login</router-link></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <router-view/>
+    <div>
+      <b-nav tabs fill class="routerbtn">
+        <b-nav-item :to="{ name: 'Home' }">
+          <img alt="Vue logo" src="@/assets/logoo.png" id="logo">
+        </b-nav-item>
+        <b-nav-item><router-link :to="{ name: 'Home' }">Home</router-link></b-nav-item>
+        <b-nav-item><router-link :to="{ name: 'All' }">All</router-link></b-nav-item>
+        <b-nav-item><router-link :to="{ name: 'Genre' }">Genre</router-link></b-nav-item>
+        <b-nav-item v-if="isLogin"><a @click="goRecommend()">Recommend</a></b-nav-item>
+        <b-nav-item v-if="isLogin"><router-link @click.native="logout" to="#">Logout</router-link></b-nav-item>
+        <b-nav-item v-else><router-link to="/signup">Sign Up</router-link></b-nav-item>
+        <b-nav-item v-if="!isLogin"><router-link to="/login">Login</router-link></b-nav-item>
+      </b-nav>
+    </div>
+  <router-view @login="login" />
   </div>
 </template>
 
 <script>
-
+import jwt_decode from "jwt-decode"
+import axios from "axios"
 
 export default {
   name: 'App',
+  data: function () {
+    return {
+      isLogin: false,
+      username: '',
+    }
+  },
+  methods: {
+    setToken: function () {
+      const jwt = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${jwt}`
+      }
+      return config
+    },
+    logout: function () {
+      localStorage.removeItem('jwt')
+      this.isLogin = false,
+      this.$router.push({ name: 'Login' })
+    },
+    login: function () {
+      this.isLogin = true
+      const JWT = localStorage.getItem('jwt')
+      let decoded = jwt_decode(JWT)
+      this.username = decoded.username
+    },
+    goRecommend() {
+      if (this.$store.state.moviedetail.length !== 0) {
+        this.$store.state.watchrecommend = true
+        const MOVIE_ID = this.$store.state.moviedetail.id
+        const config = this.setToken()
+        axios({
+          method: 'get',
+          url: `http://127.0.0.1:8000/movies/recommend/${MOVIE_ID}/`,
+          headers: config
+        })
+          .then((res) => {
+            console.log("recommended: ", res)
+            this.$store.state.moviedetail = res.data
+            this.$router.push({ name: 'Recommend'});
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      } else {
+        this.watchrecommend = false
+      }
+    },
+  },
+  created: function () {
+    const JWT = localStorage.getItem('jwt')
+    if (JWT) {
+      this.isLogin = true
+      let decoded = jwt_decode(JWT)
+      this.username = decoded.username
+    }
+  }
 
 }
 </script>
@@ -54,7 +91,15 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-image: url('assets/background.png');
+  /* height: 100vh; */
+  background-size: cover;
+  /* opacity: 0.5; */
+  /* background-blend-mode: lighten; */
+  /* background-color: rgb(0, 0, 0, 0.5); */
 }
+#app nav-bar-auto
+
 
 #nav {
   padding: 30px;
@@ -67,5 +112,18 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#logo {
+  width: 30px;
+  height: 30px;
+}
+
+.routerbtn {
+  font-size: 20px;
+}
+
+.a:hover {
+  text-decoration-style: none;
 }
 </style>

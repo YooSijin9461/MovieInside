@@ -2,11 +2,12 @@
   <div id="moviecard" @click="[watchDetail(), getMovieGenre(), getComment()]">
     <div class="col">
       <div class="card">
-        <img :src="movieUrl" class="card-img-top" alt="..." height="300px">
-        <div class="card-body">
-          <h5 class="card-title">{{ movie.title }}</h5>
+        <img :src="movieUrl" class="card-img-top" alt="..." height="100%">
+        <!-- <div class="card-body">
+          <h5 class="card-title title">{{ movie.title }}</h5>
+          <p class="card-text">평점 : {{ movie.vote_average}}</p> -->
           <!-- <p class="card-text">{{ movie.overview }}</p> -->
-        </div>
+        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -66,6 +67,19 @@ export default {
 
 <style>
 .card {
-  height: 400px;
+  height: 100%;
+  width: 300px;
+}
+#moviecard {
+  height: 450px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  border: 2px solid darkgray;
+  background-color: rgb(202, 240, 221);
+}
+#moviecard:hover {
+  opacity: 0.5;
+  /* background-color:; */
 }
 </style>

@@ -1,9 +1,8 @@
 <template>
   <div id="Genre">
-    <h2>장르별 영화 목록</h2>
-    <div class="row row-cols-6">
+    <span class="genrebutton">
       <MovieCardGenre v-for="(moviegenre, idx) in moviesgenre" :key="idx" :moviegenre="moviegenre"/>
-    </div>
+    </span>
     <GenreMovie />
   </div>
 </template>
@@ -21,19 +20,23 @@ export default {
   methods: {
   },
   computed: {
-    genreMovieList: function () {
-      return this.$store.dispatch('genreMovieList')
-    },
     moviesgenre: function () {
       return this.$store.state.moviesgenre
     },
     genremovies: function () {
       return this.$store.state.genremovies
     }
-  }
+  },
+  mounted: function () {
+    this.$store.dispatch('genreMovieList')
+  },
 }
 </script>
 
 <style>
-
+.genrebutton {
+  display: flex;
+  flex-flow: row wrap;
+  
+}
 </style>

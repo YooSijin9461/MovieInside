@@ -1,26 +1,40 @@
 <template>
-  <div id="comment">
+  <div id="comment" class="col-12">
     <CommentList v-for="(comment, idx) in comments" :key="idx" :comment="comment" :moviedetail="moviedetail"/>
-    <input type="text" v-model.trim="contents">
-    <button @click="addComment">등록</button>
+    <form id="votename">
+      <label style="margin-right: 10px;" for="vote">평점:</label>
+      <select name="vote" id="vote" v-model="vote">
+        <option value=1 selected>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=9>9</option>
+        <option value=10>10</option>
+      </select>
+    <input class="commentform" type="text" v-model.trim="contents">
+    <button id="vote" class="inputbtn" @click="[addComment(), getVote()]">등록</button>
+    </form>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import CommentList from '@/components/CommentList.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Comment',
-  props: {
-    moviedetail: Object,
-  },
   components: {
     CommentList,
   },
   data: function () {
     return {
       contents: '',
+      vote: 1,
     }
   },
   methods: {
@@ -44,9 +58,7 @@ export default {
           data: commentItem,
           headers: config,
         })
-          .then((res) => {
-            console.log(res)
-            // console.log(review)
+          .then(() => {
             this.getComment()
             this.contents = ''
           })
@@ -65,17 +77,39 @@ export default {
       })
         .then((res) => {
           this.$store.state.comments = res.data
-          console.log(res)
         })
         .catch((err) => {
           console.log(err)
         })
     },
+    getVote: function () {
+      const MOVIE_ID = this.moviedetail.id
+      const config = this.setToken()
+      const voteItem = {
+        vote: this.vote,
+      }
+      if (voteItem.vote) {
+        axios({
+          method: 'post',
+          url: `http://127.0.0.1:8000/movies/vote/${MOVIE_ID}/`,
+          data: voteItem,
+          headers: config
+        })
+          .then((res) => {
+            this.$store.state.moviedetail.vote_average = res.data.vote_average
+            this.$store.state.moviedetail.vote_count = res.data.vote_count
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    },
+  },
+  mounted: function () {
+    this.getComment()
   },
   computed: {
-    // getComment: function () {
-    //   return this.$store.dispatch('getComment', this.moviedetail, this.config)
-    // },
+    ...mapState(['moviedetail']),
     comments: function () {
       return this.$store.state.comments
     },
@@ -84,5 +118,21 @@ export default {
 </script>
 
 <style>
+.inputbtn {
+  color: black;
+}
 
+.commentform {
+  width: 80%;
+  color: black;
+}
+
+#vote {
+  color: black;
+}
+
+select {
+  height: 26px;
+  width: 50px;
+}
 </style>

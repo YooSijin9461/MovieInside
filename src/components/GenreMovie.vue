@@ -4,6 +4,9 @@
     <div id="cards" class="row row-cols-3 row-cols-md-5" v-else>
       <MovieCard v-for="(movie, idx) in genremovies" :key="idx" :movie="movie"/>
     </div>
+    <div class="empty" v-if="genremovies.length === 0">
+      <p class=""></p>
+    </div>
   </div>
 </template>
 
@@ -31,10 +34,15 @@ export default {
     watchdetail: function () {
       return this.$store.state.watchdetail
     }
+  },
+  mounted() {
+    console.log(this.genremovies.length === 0);
   }
 }
 </script>
 
 <style>
-
+.empty {
+  height:100vh;
+}
 </style>

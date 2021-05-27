@@ -1,17 +1,15 @@
 <template>
   <div id="login">
     <h1>Login</h1>
-    <div>
-      <label for="username">사용자 이름: </label>
-      <input type="text" id="username" v-model="username">
+    <div class="form-floating mb-3">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" placeholder="Username" v-model="username">
     </div>
-    <div>
-      <label for="password">비밀번호: </label>
-      <input type="password" id="password" v-model="password"
-      @keypress.enter="login"
-      >
+    <div class="form-floating">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password" v-model="password" @keypress.enter="login">
     </div>
-    <button @click="login">로그인</button>
+    <b-button class="btn-primary" @click="login">로그인</b-button>
   </div>
 </template>
 
@@ -55,6 +53,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#login {
+  height: 100vh;
+}
 
+.form-control {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 20px;
+}
 </style>

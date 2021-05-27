@@ -17,6 +17,8 @@ export default new Vuex.Store({
     comments: [],
     recomments: [],
     config: '',
+    movievote: 0,
+    watchrecommend: false,
   },
   mutations: {
     ALL_MOVIE_LIST: function (state, res) {
@@ -48,10 +50,13 @@ export default new Vuex.Store({
     // GET_HISTORY_COMMENT: function (state, res) {
     //   state.historycomments = res.data
     // },
+    MOVIE_VOTE: function (state, res) {
+      state.movievote = res.data
+    },
   },
   actions: {
     allMovieList: function ({ commit }) {
-      const MOVIE_URL = 'http://127.0.0.1:8000/movies/all/1'
+      const MOVIE_URL = `http://127.0.0.1:8000/movies/all/1`
       axios.get(MOVIE_URL)
         .then((res) => {
           commit('ALL_MOVIE_LIST', res)
@@ -90,6 +95,9 @@ export default new Vuex.Store({
     },
     watchCard: function ({ commit }) {
       commit('WATCH_CARD')
+    },
+    movieVote: function ({ commit }, res) {
+      commit('MOVIE_VOTE', res)
     },
     getMovieGenre: function ({ commit }, moviedetail) {
       const GENRE_URL = `http://127.0.0.1:8000/movies/detail/${moviedetail.id}/genres`

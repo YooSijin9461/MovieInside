@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// import Paginate from 'vuejs-paginate'
 import Home from '../views/Home.vue'
 import All from '@/views/All.vue'
-import About from '@/views/About.vue'
+import Recommend from '@/views/Recommend.vue'
 import Genre from '@/views/Genre.vue'
 import SignUp from '@/views/SignUp.vue'
 import Login from '@/views/Login.vue'
 
 Vue.use(VueRouter)
+// Vue.component('paginate', Paginate)
 
 const routes = [
   {
@@ -36,9 +38,9 @@ const routes = [
     component: Login
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About
+    path: '/recommend',
+    name: 'Recommend',
+    component: Recommend
   },
 ]
 

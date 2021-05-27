@@ -1,6 +1,5 @@
 <template>
   <div id="commenthistory">
-    수정내역
     <CommentHistoryList :comment="comment" v-for="(historycomment, idx) in historycomments" :key="idx" :historycomment="historycomment"/>
   </div>
 </template>
@@ -39,5 +38,8 @@ export default {
 </script>
 
 <style>
-
+#commenthistory {
+  display: flex;
+  justify-content: start;
+}
 </style>

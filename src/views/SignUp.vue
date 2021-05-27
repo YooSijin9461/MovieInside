@@ -1,49 +1,23 @@
 <template>
   <div id="signup">
-    <form class="row g-3">
-  <div class="col-md-4">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" value="name" required>
-  </div>
-  <!-- <div class="col-md-4">
-    <label for="validationBirth" class="form-label">Birth</label>
-    <input type="text" class="form-control" id="validationBirth" value="YYYYMMDD" required>
-  </div>
-  <div class="col-md-2">
-    <label for="sex" class="form-label">Sex</label>
-    <select class="form-select" id="validationSex" required>
-      <option>Man</option>
-      <option>Woman</option>
-    </select>
-  </div> -->
-  <div class="col-md-10">
-    <label for="email" class="form-label">Email</label>
-    <div class="input-group">
-      <input type="text" class="form-control" id="email"  aria-describedby="inputGroupPrepend2" required>
-      <span class="input-group-text" id="inputGroupPrepend2">@</span>
-      <!-- <input type="text" class="form-control" id="email"  aria-describedby="inputGroupPrepend2" required> -->
+    <h1 class="title">Sign Up</h1>
+    <div class="form-floating">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" placeholder="Username" v-model="username">
     </div>
-  </div>
-  <div class="col-md-5">
-    <label for="password" class="form-label">Password</label>
-    <input type="text" class="form-control" id="password" required>
-  </div>
-  <div class="col-md-5">
-    <label for="passwordConfirm" class="form-label">PasswordConfirm</label>
-    <input type="text" class="form-control" id="passwordConfirm" required>
-  </div>
-  <div class="col-10">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-      <label class="form-check-label" for="invalidCheck2">
-        Agree to terms and conditions
-      </label>
+    <div class="form-floating">
+      <label for="email">E-mail</label>
+      <input type="text" class="form-control" id="email" placeholder="E-mail" v-model="email">
     </div>
-  </div>
-  <div class="col-10">
-    <button class="btn btn-primary" type="submit" @click="SignUp">Sign Up</button>
-  </div>
-</form>
+    <div class="form-floating">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password" v-model="password">
+    </div>
+    <div class="form-floating">
+      <label for="passwordConfirm">Password</label>
+      <input type="password" class="form-control" id="passwordConfirm" placeholder="PasswordConfirm" v-model="passwordConfirm">
+    </div>
+    <b-button class="btn-primary" @click="signUp">회원가입</b-button>
   </div>
 </template>
 
@@ -57,19 +31,15 @@ export default {
   data: function () {
     return {
       username: '',
-      // age: '',
-      // sex: '',
       email: '',
       password: '',
       passwordConfirm: '',
     }
   },
   methods: {
-    SignUp: function () {
+    signUp: function () {
       const userdata = {
         username: this.username,
-        // age: this.age,
-        // sex: this.sex,
         email: this.email,
         password: this.password,
         passwordConfirm: this.passwordConfirm
@@ -92,6 +62,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#signup {
+  height: 100vh;
+}
 
+.form-control {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.title {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>
